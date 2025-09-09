@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Header from '../../components/Header'
+import Image from 'next/image'
 
 // Type definitions for categories
 interface Category {
@@ -12,15 +13,12 @@ interface Category {
 // Server component - fetches data from our API route
 async function fetchCategories(): Promise<Category[]> {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/ex3`, {
-            // Enable caching for better performance
-            next: { revalidate: 3600 } // Revalidate every hour
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ex3`, {
         })
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`)
         }
-
         const data = await response.json()
         return data
     } catch (error) {
@@ -68,13 +66,16 @@ export default async function Page() {
                                 >
                                     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group-hover:scale-105">
                                         {/* Category Image Placeholder */}
+
                                         <div className="relative h-48 bg-gradient-to-br from-blue-400 to-purple-500">
                                             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
                                                 <div className="text-center text-white">
-                                                    <svg className="w-16 h-16 mx-auto mb-2 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fillRule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM10 18V8.414l5-5V18h-5z" clipRule="evenodd" />
-                                                    </svg>
-                                                    <h3 className="text-xl font-bold capitalize">{category.name}</h3>
+                                                    <Image
+                                                        src={`https://dummyjson.com/image/300x200/008080/ffffff?text=${category.name}`}
+                                                        alt={category.name}
+                                                        fill
+                                                        className="w-full h-48 object-cover"
+                                                    />
                                                 </div>
                                             </div>
                                         </div>

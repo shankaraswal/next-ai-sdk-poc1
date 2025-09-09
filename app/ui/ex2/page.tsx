@@ -65,6 +65,8 @@ function Page() {
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
+        let isMounted = true
+
         const getData = async () => {
             setLoading(true)
             setError(null)
@@ -74,18 +76,32 @@ function Page() {
                     throw new Error(`HTTP error! status: ${res.status}`)
                 }
                 const result: ProductsResponse = await res.json()
-                console.log('API Response:', result)
-                console.log('First product thumbnail:', result.products[0]?.thumbnail)
-                setData(result)
+
+                // Only update state if component is still mounted
+                if (isMounted) {
+                    console.log('API Response:', result)
+                    console.log('First product thumbnail:', result.products[0]?.thumbnail)
+                    setData(result)
+                }
             } catch (err) {
-                console.error(err)
-                const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred'
-                setError(errorMessage)
+                if (isMounted) {
+                    console.error(err)
+                    const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred'
+                    setError(errorMessage)
+                }
             } finally {
-                setLoading(false)
+                if (isMounted) {
+                    setLoading(false)
+                }
             }
         }
+
         getData()
+
+        // Cleanup function
+        return () => {
+            isMounted = false
+        }
     }, [])
 
     if (loading) {
