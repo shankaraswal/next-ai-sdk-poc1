@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Uncomment to disable strict mode (not recommended for production)
+  // reactStrictMode: false,
   images: {
     remotePatterns: [
       {
