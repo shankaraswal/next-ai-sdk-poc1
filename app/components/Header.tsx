@@ -9,8 +9,9 @@ export default function Header() {
     const navItems = [
         { name: 'Home', href: '/' },
         { name: 'Ex1 (Direct API)', href: '/ui/ex1' },
-        { name: 'Ex2 (API Route)', href: '/ui/ex2' },
-        { name: 'Ex3 (Server Component)', href: '/ui/ex3' },
+        { name: 'Ex2 (Route Handler)', href: '/ui/ex2' },
+        { name: 'Ex3 (SSR)', href: '/ui/ex3' },
+        { name: 'Ex4 (SSG)', href: '/ui/ex4' },
     ]
 
     return (
