@@ -14,6 +14,8 @@ interface Category {
 async function fetchCategories(): Promise<Category[]> {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ex3`, {
+            // Enable ISR - static generation with revalidation
+            next: { revalidate: 2592000 } // Revalidate every 30 days (30 * 24 * 60 * 60)
         })
 
         if (!response.ok) {
@@ -126,4 +128,4 @@ export default async function Page() {
             </div>
         </>
     )
-}
+}   
